@@ -5,14 +5,13 @@ if (!process.env.JWT_SECRET) {
 }
 const app = require("./app");
 const logger = require("./logger");
+const prisma = require("./db");
 
 const PORT = 3000;
 
 const server = app.listen(PORT, () => {
   logger.info("API started", { port: PORT });
 });
-
-const prisma = require("./db");
 
 let shuttingDown = false;
 
