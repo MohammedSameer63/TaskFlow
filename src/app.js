@@ -2,13 +2,11 @@ const express = require("express");
 const logger = require("./logger");
 const authRoutes = require("./routes/auth");
 const taskRoutes = require("./routes/tasks");
+const healthRoutes = require("./routes/health");
 
 const app = express();
 
 app.use(express.json());
-app.use("/auth", authRoutes);
-app.use("/tasks",taskRoutes);
-app.use("/",require("./routes/health"));
 
 app.use((req, res, next) => {
   logger.info("Request received", {
@@ -18,9 +16,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
+app.use("/auth", authRoutes);
+app.use("/tasks",taskRoutes);
+app.use("/health", healthRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
